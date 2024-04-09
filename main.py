@@ -2,10 +2,10 @@ from data import *
 from nearest_neighbor import *
 
 def nearest(X_train, y_train, X_test, y_test):
-    nn = nearest_neighbor_torch()
-    nn.fit(X_train, y_train)
+    Knn = KNeighborsClassifier()
+    Knn.fit(X_train, y_train)
 
-    y_pred = np.array([nn.predict(X_test[i]) for i in range(len(X_test))])
+    y_pred = Knn.predict(X_test)
    
     return y_pred
     
@@ -29,4 +29,3 @@ if __name__ == '__main__':
         print("Training and testing data loaded successfully for normalized data")
         print(f'The accuracy of normalized nearest neighbor {accuracy(norm_pred, y_test_norm):.3f}')
 
-        print("An exception occurred:", e)
