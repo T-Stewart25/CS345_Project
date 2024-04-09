@@ -46,6 +46,12 @@ def standardization(X):
     std = np.std(X, axis=0)
     return (X - mean) / std
 
+def normalize(X):
+    min_val = np.min(X, axis=0)
+    max_val = np.max(X, axis=0)
+    return(X - min_val) / (max_val - min_val)
+
+
 def load_data(file_path):
     df = pd.read_csv(file_path)
     df['attack_cat'] = df['attack_cat'].map(classes)
@@ -61,13 +67,8 @@ def split_data(data):
     return X_data, y_data
 
 def preprocess_data_with_standardization(training_file, testing_file):
-    training_data = load_data(training_file)
-    testing_data = load_data(testing_file)
-    
-    X_train, y_train = split_data(training_data)
-    X_test, y_test = split_data(testing_data)
-    
-    
+    X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
+
     # Standardize features
     X_train = standardization(X_train)
     X_test = standardization(X_test)
@@ -75,6 +76,26 @@ def preprocess_data_with_standardization(training_file, testing_file):
     X_train = X_train.astype(np.float32)
     X_test = X_test.astype(np.float32)
     
+    return X_train, y_train, X_test, y_test
+
+def preprocess_data_with_normalization(training_file, testing_file):
+    X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
+    
+    # Normalize features
+    X_train = normalize(X_train)
+    X_test = normalize(X_test)
+    
+    X_train = X_train.astype(np.float32)
+    X_test = X_test.astype(np.float32)
+    
+    return X_train, y_train, X_test, y_test
+
+def process_data(training_file, testing_file):
+    training_data = load_data(training_file)
+    testing_data = load_data(testing_file)
+    
+    X_train, y_train = split_data(training_data)
+    X_test, y_test = split_data(testing_data)
     return X_train, y_train, X_test, y_test
 
 
