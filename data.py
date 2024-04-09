@@ -84,8 +84,8 @@ def preprocess_data_with_standardization(training_file, testing_file):
     X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
 
     # Standardize features
-    #X_train = standardization(X_train)
-    #X_test = standardization(X_test)
+    X_train = standardization(X_train)
+    X_test = standardization(X_test)
     
     X_train = X_train.astype(np.float32)
     X_test = X_test.astype(np.float32)
@@ -96,8 +96,8 @@ def preprocess_data_with_normalization(training_file, testing_file):
     X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
     
     # Normalize features
-    #X_train = normalize(X_train)
-    #X_test = normalize(X_test)
+    X_train = normalize(X_train)
+    X_test = normalize(X_test)
     
     X_train = X_train.astype(np.float32)
     X_test = X_test.astype(np.float32)
