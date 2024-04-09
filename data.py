@@ -1,6 +1,5 @@
 import numpy as np
 
-
 classes = {
     "Normal": "0",
     "Fuzzers": "1",
