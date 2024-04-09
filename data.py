@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.utils import shuffle
 
 classes = {
     "Normal": 0,
@@ -40,17 +41,20 @@ state = {
     'PAR': 0, 'RST': 1, 'URN': 2, 'REQ': 3, 'ECO': 4, 'no': 5, 'CON': 6, 'FIN': 7, 'INT': 8, 'CLO': 9, 'REQ': 10, 'RST': 11, 'INT': 12, 'ACC': 13
 }
 
-
-def standardization(X):
-    mean = np.mean(X, axis=0)
-    std = np.std(X, axis=0)
-    return (X - mean) / std
-
-def normalize(X):
-    min_val = np.min(X, axis=0)
-    max_val = np.max(X, axis=0)
-    return(X - min_val) / (max_val - min_val)
-
+def process_data(training_file, testing_file):
+    # Load data
+    training_data = load_data(training_file)
+    testing_data = load_data(testing_file)
+    
+#CANT SHUFFLE DATA
+    #training_data = shuffle(training_data)
+    #testing_data = shuffle(testing_data)
+    
+    # Split data
+    X_train, y_train = split_data(training_data)
+    X_test, y_test = split_data(testing_data)
+    
+    return X_train, y_train, X_test, y_test
 
 def load_data(file_path):
     df = pd.read_csv(file_path)
@@ -66,12 +70,22 @@ def split_data(data):
     
     return X_data, y_data
 
+def standardization(X):
+    mean = np.mean(X, axis=0)
+    std = np.std(X, axis=0)
+    return (X - mean) / std
+
+def normalize(X):
+    min_val = np.min(X, axis=0)
+    max_val = np.max(X, axis=0)
+    return(X - min_val) / (max_val - min_val)
+
 def preprocess_data_with_standardization(training_file, testing_file):
     X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
 
     # Standardize features
-    X_train = standardization(X_train)
-    X_test = standardization(X_test)
+    #X_train = standardization(X_train)
+    #X_test = standardization(X_test)
     
     X_train = X_train.astype(np.float32)
     X_test = X_test.astype(np.float32)
@@ -82,28 +96,10 @@ def preprocess_data_with_normalization(training_file, testing_file):
     X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
     
     # Normalize features
-    X_train = normalize(X_train)
-    X_test = normalize(X_test)
+    #X_train = normalize(X_train)
+    #X_test = normalize(X_test)
     
     X_train = X_train.astype(np.float32)
     X_test = X_test.astype(np.float32)
     
     return X_train, y_train, X_test, y_test
-
-def process_data(training_file, testing_file):
-    training_data = load_data(training_file)
-    testing_data = load_data(testing_file)
-    
-    X_train, y_train = split_data(training_data)
-    X_test, y_test = split_data(testing_data)
-    return X_train, y_train, X_test, y_test
-
-
-def getValues(file_path):
-    data = set()
-    with open(file_path, 'r') as file:
-        next(file)  # Skip header
-        for line in file:
-            temp = line.strip().split(',')
-            data.add(temp[4])
-    return data
