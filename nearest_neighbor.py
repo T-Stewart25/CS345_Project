@@ -5,8 +5,8 @@ class nearest_neighbor:
     def __init__(self):
         pass
     def fit(self, X, y):
-        self.X = X
-        self.y = y
+        self.X = np.array(X)
+        self.y = np.array(y)
     def predict(self, X_test) :
         y_pred = np.array([])
 

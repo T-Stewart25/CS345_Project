@@ -65,8 +65,8 @@ def load_data(file_path):
     return df
 
 def split_data(data):
-    X_data = data.iloc[:, :-2]
-    y_data = data.iloc[:, -1]
+    X_data = data.iloc[:, :-2].astype(np.float32).values.tolist()
+    y_data = data.iloc[:, -1].astype(np.float32).values.tolist()
     
     return X_data, y_data
 
@@ -80,6 +80,13 @@ def normalize(X):
     max_val = np.max(X, axis=0)
     return(X - min_val) / (max_val - min_val)
 
+def preprocess_data(training_file, testing_file):
+    X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
+
+    
+    
+    return X_train, y_train, X_test, y_test
+
 def preprocess_data_with_standardization(training_file, testing_file):
     X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
 
@@ -87,8 +94,6 @@ def preprocess_data_with_standardization(training_file, testing_file):
     X_train = standardization(X_train)
     X_test = standardization(X_test)
     
-    X_train = X_train.astype(np.float32)
-    X_test = X_test.astype(np.float32)
     
     return X_train, y_train, X_test, y_test
 
@@ -99,7 +104,5 @@ def preprocess_data_with_normalization(training_file, testing_file):
     X_train = normalize(X_train)
     X_test = normalize(X_test)
     
-    X_train = X_train.astype(np.float32)
-    X_test = X_test.astype(np.float32)
     
     return X_train, y_train, X_test, y_test
