@@ -1,3 +1,9 @@
+import numpy as np
+
+def standardization(X):
+    return (X - np.mean(X, axis=0))/np.std(X, axis=0)
+
+
 def load_data():
     training = []
     testing = []
