@@ -1,4 +1,5 @@
 from sklearn.neighbors import KNeighborsClassifier
+import numpy as np
 
 class nearest_neighbor:
     def __init__(self):
