@@ -45,12 +45,17 @@ class Data():
     def __init__(self, training_file, testing_file):
         self.training_file = training_file
         self.testing_file = testing_file
+        #Create basic train test split and shuffle data
         self.X_train, self.y_train, self.X_test, self.y_test = self.process_data()
+        #Create normalized data
         self.X_train_norm, self.X_test_norm = self.normalize_data(self.X_train, self.X_test)
+        #Create standardized data
         self.X_train_std, self.X_test_std = self.standardize_data(self.X_train, self.X_test)
+        #Create standardized normalized data
         self.X_train_std_norm, self.X_test_std_norm = self.standardize_data(self.X_train_norm, self.X_test_norm)
 
     def process_data(self):
+        #Makes all values floats and shuffles the data then splits it for testing and training
         training_data = load_data(self.training_file)
         testing_data = load_data(self.testing_file)
 
