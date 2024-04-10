@@ -61,6 +61,10 @@ class Data():
 
         training_data = shuffle(training_data)
         testing_data = shuffle(testing_data)
+        
+        #Shuffle again to randomize data more
+        training_data = shuffle(training_data)
+        testing_data = shuffle(testing_data)
 
         X_train, y_train = split_data(training_data)
         X_test, y_test = split_data(testing_data)
