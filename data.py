@@ -90,7 +90,7 @@ def load_data(file_path):
     return df
 
 def split_data(data):
-    X_data = data.iloc[:, :-2].astype(np.float32).values.tolist()
+    X_data = data.iloc[:, 1:-2].astype(np.float32).values.tolist()
     y_data = data.iloc[:, -1].astype(np.float32).values.tolist()
     
     return X_data, y_data
