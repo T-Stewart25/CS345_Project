@@ -48,6 +48,7 @@ class Data():
         self.X_train, self.y_train, self.X_test, self.y_test = self.process_data()
         self.X_train_norm, self.X_test_norm = self.normalize_data(self.X_train, self.X_test)
         self.X_train_std, self.X_test_std = self.standardize_data(self.X_train, self.X_test)
+        self.X_train_std_norm, self.X_test_std_norm = self.standardize_data(self.X_train_norm, self.X_test_norm)
 
     def process_data(self):
         training_data = load_data(self.training_file)
