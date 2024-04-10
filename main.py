@@ -33,11 +33,11 @@ def compare(data):
     overall_accuracies = []
     for i in range(10):
         overall_accuracies.append(nearest_neighbor(data))
-        data = Data('training.csv', 'testing.csv')
+        data = Data('training.csv', 'testing.csv')#Reload the data to randomize it more
     overall_accuracies = np.array(overall_accuracies)
     print(f'\nThe average accuracy of the nearest neighbor model is {np.mean(overall_accuracies)*100:.5f}% with a standard deviation of {np.std(overall_accuracies)*100:.5f}%\n')
 
 if __name__ == '__main__':
     data = Data('training.csv', 'testing.csv')
-    #compare(data)#Uncomment this line to compare the accuracies of the nearest neighbor model to get an average accuracy and standard deviation
+    #compare(data)  #Uncomment this line to compare the accuracies of the nearest neighbor model to get an average accuracy and standard deviation over multiple runs
     nearest_neighbor(data)
