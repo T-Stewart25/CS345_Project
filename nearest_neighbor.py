@@ -16,7 +16,7 @@ def nearest(X_train, y_train, X_test, y_test):
         X_train_fold, X_train2_fold = X_train[train_index], X_train[train2_index] #Get the training data
         y_train_fold, y_train2_fold = y_train[train_index], y_train[train2_index] #Get more training data
         knn.fit(X_train_fold, y_train_fold)#Fit the model
-        knn.fit(X_train2_fold, y_train2_fold)#Fit the model again. Since data is already splut for validation, we can fit the model again
+        knn.fit(X_train2_fold, y_train2_fold)#Fit the model again. Since data is already split for validation, we can fit the model again
 
     y_pred = knn.predict(X_test) #Predict the test data
    
