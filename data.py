@@ -41,20 +41,35 @@ state = {
     'PAR': 0, 'RST': 1, 'URN': 2, 'REQ': 3, 'ECO': 4, 'no': 5, 'CON': 6, 'FIN': 7, 'INT': 8, 'CLO': 9, 'REQ': 10, 'RST': 11, 'INT': 12, 'ACC': 13
 }
 
-def process_data(training_file, testing_file):
-    # Load data
-    training_data = load_data(training_file)
-    testing_data = load_data(testing_file)
+class Data():
+    def __init__(self, training_file, testing_file):
+        self.training_file = training_file
+        self.testing_file = testing_file
+        self.X_train, self.y_train, self.X_test, self.y_test = self.process_data()
+        self.X_train_norm, self.X_test_norm = self.normalize_data(self.X_train, self.X_test)
+        self.X_train_std, self.X_test_std = self.standardize_data(self.X_train, self.X_test)
+
+    def process_data(self):
+        training_data = load_data(self.training_file)
+        testing_data = load_data(self.testing_file)
+
+        training_data = shuffle(training_data)
+        testing_data = shuffle(testing_data)
+
+        X_train, y_train = split_data(training_data)
+        X_test, y_test = split_data(testing_data)
+
+        return X_train, y_train, X_test, y_test
     
-#CANT SHUFFLE DATA
-    #training_data = shuffle(training_data)
-    #testing_data = shuffle(testing_data)
+    def normalize_data(self, X_train, X_test):
+        X_train_norm = normalize(X_train)
+        X_test_norm = normalize(X_test)
+        return X_train_norm, X_test_norm
     
-    # Split data
-    X_train, y_train = split_data(training_data)
-    X_test, y_test = split_data(testing_data)
-    
-    return X_train, y_train, X_test, y_test
+    def standardize_data(self, X_train, X_test):
+        X_train_std = standardize(X_train)
+        X_test_std = standardize(X_test)
+        return X_train_std, X_test_std
 
 def load_data(file_path):
     df = pd.read_csv(file_path)
@@ -70,7 +85,7 @@ def split_data(data):
     
     return X_data, y_data
 
-def standardization(X):
+def standardize(X):
     mean = np.mean(X, axis=0)
     std = np.std(X, axis=0)
     return (X - mean) / std
@@ -79,30 +94,3 @@ def normalize(X):
     min_val = np.min(X, axis=0)
     max_val = np.max(X, axis=0)
     return(X - min_val) / (max_val - min_val)
-
-def preprocess_data(training_file, testing_file):
-    X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
-
-    
-    
-    return X_train, y_train, X_test, y_test
-
-def preprocess_data_with_standardization(training_file, testing_file):
-    X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
-
-    # Standardize features
-    X_train = standardization(X_train)
-    X_test = standardization(X_test)
-    
-    
-    return X_train, y_train, X_test, y_test
-
-def preprocess_data_with_normalization(training_file, testing_file):
-    X_train, y_train, X_test, y_test = process_data(training_file, testing_file)
-    
-    # Normalize features
-    X_train = normalize(X_train)
-    X_test = normalize(X_test)
-    
-    
-    return X_train, y_train, X_test, y_test
